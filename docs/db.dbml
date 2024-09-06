@@ -1,0 +1,92 @@
+Table client {
+  id serial pk
+  first_name varchar(50)
+  last_name varchar(50)
+  dob date
+  email varchar(100) unique
+  phone varchar(20) unique
+  address varchar(255) 
+  created_at datetime
+}
+
+Table account {
+  id serial pk
+  client_id int
+  type enum('savings', 'checking', "fd", 'credit')
+  balance decimal(20,2)
+  interest decimal(4,2)
+  created_at datetime
+  status enum('active', 'inactive', 'closed')
+}
+
+Table transaction {
+  id serial pk
+  account_id int
+  type enum ("deposit", "withdrawal", "transfer")
+  amount decimal(20, 2)
+  done_at datetime
+  balance_after decimal(20, 2)
+  system_description text
+  customer_description text
+}
+
+Table card {
+  id serial pk
+  account_id int
+  number varchar(16) unique
+  cvv varchar(3)
+  expired_at date
+  created_at date
+  status enum('active', 'blocked', 'expired')
+}
+
+Table loan {
+  id serial pk
+  customer_id int
+  amount DECIMAL(20, 2)
+  interest DECIMAL(4, 2)
+  start_date DATE
+  end_date DATE
+  status ENUM('active', 'closed', 'defaulted')
+  description text
+}
+
+Table service {
+  id serial pk
+  name varchar(50)
+  description text
+  fee decimal(4, 2)
+}
+
+Table client_service {
+  id serial pk
+  client_id int
+  service_id int
+}
+
+Table user {
+  id serial pk
+  client_id int
+  username varchar(50)
+  hashpassword varchar(255)
+  last_login datetime
+  failed_attempts int
+  status enum('active', 'blocked')
+}
+
+Table notification {
+  id serial pk
+  user_id int
+  message text
+  sent_at datetime
+  read bool
+}
+
+Ref: client.id < account.client_id
+Ref: account.id < transaction.account_id
+Ref: account.id < card.account_id
+Ref: client.id < loan.customer_id
+Ref: service.id < client_service.service_id
+Ref: client.id < client_service.client_id
+Ref: client.id - user.client_id
+Ref: user.id < notification.user_id

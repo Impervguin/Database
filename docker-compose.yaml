@@ -1,0 +1,18 @@
+services:
+  postrges:
+    ports:
+      -  "5438:5432"
+    build: .
+    env_file:
+      -  postgres.env
+    # volumes:
+    #   - ./data:/usr/local/postgres/data 
+    command:
+      - "sudo"
+      - "-u"
+      - "postgres"
+      - "postgres"
+      - "-D"
+      - "/usr/local/postgres/data"
+  
+  

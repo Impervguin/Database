@@ -1,4 +1,5 @@
 ALTER TABLE client
+    ADD CONSTRAINT client_pk PRIMARY KEY (id),
     ADD CONSTRAINT phone_uniq UNIQUE (phone_number),
     ADD CONSTRAINT email_uniq UNIQUE (email),
     ADD CONSTRAINT valid_birthday_created CHECK (dob  + interval '18 years' <= created_at),
@@ -12,6 +13,7 @@ ALTER TABLE client
     ALTER COLUMN address set NOT NULL;
 
 ALTER TABLE account
+    ADD CONSTRAINT account_pk PRIMARY KEY (id),
     ADD CONSTRAINT fk_client_id FOREIGN KEY (client_id) REFERENCES client (id),
     ADD CONSTRAINT balance_positive CHECK (balance >= 0),
     ADD CONSTRAINT interest_positive CHECK (interest >= 0),
@@ -23,6 +25,7 @@ ALTER TABLE account
     ALTER COLUMN atype set NOT NULL;
 
 ALTER TABLE card
+    ADD CONSTRAINT card_pk PRIMARY KEY (id),
     ADD CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES account (id),
     ADD CONSTRAINT card_number_uniq UNIQUE (cnumber),
     ADD CONSTRAINT cvv_valid CHECK (cvv ~ '^[0-9]{3}$'),
@@ -38,6 +41,7 @@ ALTER TABLE card
 
 
 ALTER TABLE transaction
+    ADD CONSTRAINT transaction_pk PRIMARY KEY (id),
     ADD CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES account (id),
     -- ADD CONSTRAINT created_after_account CHECK (created_at >= ) -- Условие на то, чтобы транзакция была создана после счёта
     ADD CONSTRAINT balance_after_positive CHECK (balance_after >= 0),
@@ -48,6 +52,7 @@ ALTER TABLE transaction
     ALTER COLUMN done_at set NOT NULL;
 
 ALTER TABLE loan
+    ADD CONSTRAINT loan_pk PRIMARY KEY (id),
     ADD CONSTRAINT fk_client_id FOREIGN KEY (client_id) REFERENCES client (id),
     -- ADD CONSTRAINT started_after_client CHECK (created_at >= ) -- Условие на то, чтобы заём был создан после клиента
     ADD CONSTRAINT amount_positive CHECK (amount >= 0),
@@ -65,15 +70,18 @@ ALTER TABLE loan
     ALTER COLUMN lstatus set NOT NULL;
 
 ALTER TABLE service
+    ADD CONSTRAINT service_pk PRIMARY KEY (id),
     ADD CONSTRAINT fee_positive CHECK (fee >= 0),
     ALTER COLUMN sname set NOT NULL,
     ALTER COLUMN fee set NOT NULL;
 
 ALTER TABLE client_service
+    ADD CONSTRAINT client_service_pk PRIMARY KEY (id),
     ADD CONSTRAINT fk_client_id FOREIGN KEY (client_id) REFERENCES client (id),
     ADD CONSTRAINT fk_service_id FOREIGN KEY (service_id) REFERENCES service (id);
 
 ALTER TABLE app_user
+    ADD CONSTRAINT app_user_pk PRIMARY KEY (id),
     ADD CONSTRAINT fk_client_id FOREIGN KEY (client_id) REFERENCES client (id),
     ADD CONSTRAINT username_uniq UNIQUE (username),
     ADD CONSTRAINT failed_attempts_positive CHECK (failed_attempts >= 0),
@@ -84,6 +92,7 @@ ALTER TABLE app_user
     ALTER COLUMN ustatus set NOT NULL;
 
 ALTER TABLE notification
+    ADD CONSTRAINT notification_pk PRIMARY KEY (id),
     ADD CONSTRAINT fk_client_id FOREIGN KEY (client_id) REFERENCES client (id),
     ALTER COLUMN client_id set NOT NULL,
     ALTER COLUMN nmessage set NOT NULL,

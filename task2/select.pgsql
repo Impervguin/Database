@@ -305,3 +305,13 @@
 --     FROM service
 -- )
 -- WHERE cnt = 1;
+
+
+
+-- Задание
+SELECT amount, tmp.first_name, tmp.last_name
+FROM transaction JOIN (
+    SELECT last_name, first_name, account.id AS acc_id
+    FROM account JOIN client ON client.id = account.client_id
+) as tmp ON tmp.acc_id = transaction.account_id
+ORDER BY amount DESC LIMIT 10;

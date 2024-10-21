@@ -1,7 +1,7 @@
 -- Подставляемая табличная функция.
 
 -- Вывести имена, телефоны и данные карточки клиентов, у которых они заблокированы
-CREATE OR REPLACE FUNCTION BlockedCards()
+CREATE OR REPLACE FUNCTION BlockedCards(cid INT)
 RETURNS TABLE (lf TEXT, phone VARCHAR(20), cnumber VARCHAR(16), cstatus card_status)
 LANGUAGE PLPGSQL
 AS $$

@@ -15,6 +15,7 @@ RUN echo "listen_addresses = '*'" >> /usr/local/postgres/data/postgresql.conf
 RUN echo "port = 5432" >> /usr/local/postgres/data/postgresql.conf
 RUN echo "host all impi 172.17.0.0/16 md5" >> /usr/local/postgres/data/pg_hba.conf
 RUN echo "host all impi 172.18.0.0/16 md5" >> /usr/local/postgres/data/pg_hba.conf
+RUN echo "host all impi 172.20.0.1/16 md5" >> /usr/local/postgres/data/pg_hba.conf
 RUN sudo -u postgres pg_ctl -D /usr/local/postgres/data start && psql -U postgres -c "CREATE ROLE impi WITH LOGIN PASSWORD 'imp'"
 RUN sudo -u postgres pg_ctl -D /usr/local/postgres/data start && psql -U postgres -c "ALTER ROLE impi WITH SUPERUSER "
 RUN sudo -u postgres pg_ctl -D /usr/local/postgres/data start && psql -U postgres -c "CREATE DATABASE ibank WITH OWNER = 'impi'"

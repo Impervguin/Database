@@ -5,8 +5,6 @@ services:
     build: .
     env_file:
       -  postgres.env
-    # volumes:
-    #   - ./data:/usr/local/postgres/data 
     command:
       - "sudo"
       - "-u"

@@ -10,7 +10,6 @@ DECLARE
 result NUMERIC(20, 2);
 BEGIN
     SELECT SUM(balance)
-    INTO result
     FROM account
     WHERE account.client_id = cid AND atype != 'credit';
     RETURN result;

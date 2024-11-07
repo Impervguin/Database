@@ -6,6 +6,5 @@ RUN mkdir /usr/local/postgres/data
 
 COPY ./preparedb.sh preparedb.sh
 RUN chmod 777 preparedb.sh
-COPY ./ibank/ /usr/local/postgres/ibank
 
 RUN ./preparedb.sh

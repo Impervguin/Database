@@ -12,5 +12,7 @@ services:
       - "postgres"
       - "-D"
       - "/usr/local/postgres/data"
+    volumes:
+      - ./ibank:/usr/local/postgres/ibank
   
   

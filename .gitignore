@@ -1,0 +1,4 @@
+# go files
+*.sum
+*.exe
+*.o

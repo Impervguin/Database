@@ -1,4 +1,4 @@
-package postgres
+package task6
 
 import (
 	"context"
@@ -14,17 +14,12 @@ const (
 	acquireTimeout = time.Minute
 )
 
-type PgsStorage struct {
-	conn *pgx.ConnPool
-}
-
 func DSN() string {
 	return fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
 		os.Getenv("POSTGRES_USER"), os.Getenv("POSTGRES_PASSWORD"), os.Getenv("POSTGRES_HOST"), os.Getenv("POSTGRES_PORT"), os.Getenv("POSTGRES_DB"))
 }
 
-func NewPgsStorage(ctx context.Context) (*PgsStorage, error) {
-	fmt.Println(DSN())
+func NewTask6Storage(ctx context.Context) (*Task6Storage, error) {
 	conf, err := pgx.ParseURI(DSN())
 
 	if err != nil {
@@ -40,5 +35,9 @@ func NewPgsStorage(ctx context.Context) (*PgsStorage, error) {
 		return nil, err
 	}
 
-	return &PgsStorage{conn: conn}, nil
+	return &Task6Storage{conn: conn}, nil
+}
+
+type Task6Storage struct {
+	conn *pgx.ConnPool
 }

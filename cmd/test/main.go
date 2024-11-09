@@ -1,13 +1,15 @@
 package main
 
 import (
-	"DatabaseCourse/internal/postgres"
+	"DatabaseCourse/internal/task6"
 	"context"
 )
 
 func main() {
-	_, err := postgres.NewPgsStorage(context.TODO())
+	t6s, err := task6.NewTask6Storage(context.TODO())
 	if err != nil {
 		panic(err)
 	}
+	menu := task6.NewTask6Menu(t6s)
+	menu.Serve()
 }

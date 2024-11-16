@@ -114,7 +114,14 @@ func (m *Task6Menu) sysproc8() (string, error) {
 }
 
 func (m *Task6Menu) create9() (string, error) {
-	err := m.storage.CreateStockTable()
+	ok, err := m.storage.CheckStockTable()
+	if ok {
+		return "Stock table already exists", nil
+	}
+	if err != nil {
+		return "", err
+	}
+	err = m.storage.CreateStockTable()
 	if err != nil {
 		return "", err
 	}
@@ -122,12 +129,20 @@ func (m *Task6Menu) create9() (string, error) {
 }
 
 func (m *Task6Menu) ins10() (string, error) {
+	ok, err := m.storage.CheckStockTable()
+	if !ok {
+		return "Stock doesn't exist", nil
+	}
+	if err != nil {
+		return "", err
+	}
+
 	var company string
 	var price float64
 	var quantity int
 	var dividend float64
 	fmt.Print("Input company name: ")
-	_, err := fmt.Scanf("%s", &company)
+	_, err = fmt.Scanf("%s", &company)
 	if err != nil {
 		return "", err
 	}

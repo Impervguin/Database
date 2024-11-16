@@ -13,7 +13,21 @@ CREATE TABLE IF NOT EXISTS stocks (
 )
 `
 
+const checkStockTable = `
+SELECT EXISTS(
+    SELECT *
+    FROM information_schema.tables
+    WHERE
+      table_name = 'stocks'
+);`
+
 func (t6s *Task6Storage) CreateStockTable() error {
 	_, err := t6s.conn.Exec(createStockTable)
 	return err
+}
+
+func (t6s *Task6Storage) CheckStockTable() (bool, error) {
+	var exists bool
+	err := t6s.conn.QueryRow(checkStockTable).Scan(&exists)
+	return exists, err
 }

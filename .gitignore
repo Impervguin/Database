@@ -2,3 +2,5 @@
 *.sum
 *.exe
 *.o
+
+grafana-storage

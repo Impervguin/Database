@@ -2,6 +2,7 @@ services:
   postrges:
     ports:
       -  "5438:5432"
+    container_name: postgres
     build: .
     env_file:
       -  postgres.env
@@ -14,5 +15,33 @@ services:
       - "/usr/local/postgres/data"
     volumes:
       - ./ibank:/usr/local/postgres/ibank
-  
-  
+    networks:
+      - pgr_network
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana-storage:/var/lib/grafana
+
+    networks:
+      - pgr_network
+  redis:
+    image: redis:alpine3.20
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+  # nifi:
+  #   ports:
+  #     - "8443:8443"
+  #   image: apache/nifi:latest
+  #   environment:
+  #     - NIFI_HTTP_PORT=8443
+
+
+networks:
+  pgr_network:
+    driver: bridge

@@ -2,5 +2,7 @@
 *.sum
 *.exe
 *.o
+*.log
 
 grafana-storage
+nifi

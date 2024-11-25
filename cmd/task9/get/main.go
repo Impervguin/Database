@@ -61,6 +61,7 @@ func redisPipeline(ch chan<- *GetTimeUnit, st *task9.Task9Storage) {
 }
 
 func main() {
+	fmt.Println(task9.DSN())
 	pg, err := task9.NewPgStorage(context.TODO())
 	if err != nil {
 		panic(err)
